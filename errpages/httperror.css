@@ -1,0 +1,145 @@
+/*
+    httperror.css - Error Page Styling
+*/
+body{
+    margin:0;
+    padding:0;
+    background:#000;
+    font-family:"Helvetica Neue",Helvetica, Arial !important;
+    font-size: 22px;
+}
+
+@media print {
+  body {
+    display:none;
+  }
+}
+
+.over-dark-bg {
+    color:yellow !important;
+}
+
+/*
+    Box styling
+*/
+.httperror-banner {
+    width: 80%;
+    margin-left: 10%;
+    margin-bottom:10%;
+
+    /* border: 3px solid yellow; */
+    background-color: rgba(79, 79, 79, 0.79);
+	-webkit-backdrop-filter: blur(3px);
+	backdrop-filter: blur(3px);
+
+	border-radius:1.5em;
+	-webkit-border-radius:1.5em;
+	-moz-border-radius:1.5em;
+	-o-border-radius:1.5em;
+	-ms-border-radius:1.5em;
+
+    padding: 1%
+}
+
+.httperror-content {
+}
+
+.httperror-banner-border {
+    border-color: #3d425c;
+    border-style: ridge;
+    border-width: 10px;
+}
+
+.httperror-banner-shadow {
+    -webkit-box-shadow: 18px 18px 20px 0px rgba(0,0,0,0.70);
+    -moz-box-shadow: 18px 18px 20px 0px rgba(0,0,0,0.70);
+    box-shadow: 18px 18px 20px 0px rgba(0,0,0,0.70);
+}
+
+.httperror-heading {
+    text-align:center;
+}
+
+/*
+    Media breaks
+*/
+@media (min-width:100px) {
+    .httperror-banner {
+        margin-top:25%;
+    }
+    .httperror-heading {
+        font-size:22px;
+    }
+}
+
+@media (min-width:300px) {
+    .httperror-banner {
+        margin-top:20%;
+        margin-bottom:20%;
+    }
+    .httperror-heading {
+        font-size:28px;
+    }
+}
+
+@media (min-width:400px) {
+    .httperror-banner {
+        margin-top:15%;
+        margin-bottom:15%;
+    }
+}
+
+@media (min-width:500px) {
+    .httperror-banner {
+        margin-top:15%;
+        margin-bottom:15%;
+    }
+    .httperror-heading {
+        text-align: center;
+    }
+}
+
+@media (min-width:600px) {
+    .httperror-banner {
+        width: 90%;
+        margin-left: 5%;
+        margin-top:10%;
+        margin-bottom:10%;
+    }
+    .httperror-heading {
+        text-align: center;
+        font-size:32px;
+    }
+}
+
+@media (min-width:700px) {
+    .httperror-banner {
+        margin-top:15%;
+        margin-bottom:15%;
+    }
+}
+
+@media (min-width:900px) {
+    .httperror-banner {
+        width: 90%;
+        margin-left: 5%;
+        margin-top: 10%;
+        margin-bottom:10%;
+    }
+    .httperror-heading {
+        font-size:44px;
+    }
+}
+
+@media (min-width:1199px) {
+    .httperror-banner {
+        margin-top:10%;
+        margin-bottom:5%;
+        width: 80%;
+        margin-left: 10%;
+    }
+    .httperror-heading {
+        padding-top:0%;
+    }
+}
+
