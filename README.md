@@ -119,3 +119,5 @@ You should see a "400" error page.
   * Local HTTP Server: XAMPP
     * PHP 5.6 
 
+---
+<img src="http://webexperiment.info/extcounter/mdcount.php?id=php-http_error_page">
