@@ -9,7 +9,8 @@ Options All -Indexes
 ###ErrorDocument 405 /errpages/httperror.php
 
 # IMPORTANT!!! : Must remove or comment out below when 
-# deploying on a live site!
+# deploying on a live site! Or change this to match your
+# local testing set up.
 ErrorDocument 400 /tests/httperror/errpages/httperror.php
 ErrorDocument 401 /tests/httperror/errpages/httperror.php
 ErrorDocument 403 /tests/httperror/errpages/httperror.php
