@@ -1,0 +1,17 @@
+# no folder browsing! (will cause a 403)
+Options All -Indexes
+
+# PHP error page, edit as needed for a "live" site
+###ErrorDocument 400 /errpages/httperror.php
+###ErrorDocument 401 /errpages/httperror.php
+###ErrorDocument 403 /errpages/httperror.php
+###ErrorDocument 404 /errpages/httperror.php
+###ErrorDocument 405 /errpages/httperror.php
+
+# IMPORTANT!!! : Must remove or comment out below when 
+# deploying on a live site!
+ErrorDocument 400 /tests/httperror/errpages/httperror.php
+ErrorDocument 401 /tests/httperror/errpages/httperror.php
+ErrorDocument 403 /tests/httperror/errpages/httperror.php
+ErrorDocument 404 /tests/httperror/errpages/httperror.php
+ErrorDocument 405 /tests/httperror/errpages/httperror.php
