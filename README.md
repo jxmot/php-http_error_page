@@ -45,28 +45,31 @@ Let's say you're working on two separate projects and want to test them locally 
 
 The following steps will create two project junctions :
 
-1. Open a command-line window and go to `C:\XAMPP\htdocs`
+1. Open a command-line window and go to `C:\xampp\htdocs`
 2. Run the following commands - 
-
-    `mklink /j c:\xampp\htdocs\projecta C:\Users\a-user\Documents\Projects\some-project`
-
-    `mklink /j c:\xampp\htdocs\projectb D:\projects\web\customer-X\new-site`
+    a) `mklink /j c:\xampp\htdocs\projecta C:\Users\a-user\Documents\Projects\some-project`
+    b) `mklink /j c:\xampp\htdocs\projectb D:\projects\web\customer-X\new-site`
+    
+**`mklink`** - command to create the junction
+**`/j`** - tells mklink to create a folder junction.
+**`c:\xampp\htdocs\projectb`** - a **nonexistent** folder, this is the junction
+**`D:\projects\web\customer-X\new-site`** - this is the target of the junction
 
 3. Then in your browser go to - 
 
-    `http://localhost/projecta/index.html`
+    `http://`**`localhost`**`/projecta/index.html`
 **--OR--**
-    `http://localhost/projectb/index.html`
+    `http://`**`localhost`**`/projectb/index.html`
 
-NOTE: The "junctions" are permanent until deleted from the `c:\mamp\htdocs` folder. You **must** use rmdir to remove the junction.
+NOTE: The "junctions" are permanent until deleted from the `c:\xampp\htdocs` folder. You **must** use the `rmdir`(*Windows*) to remove the junction and **leave the files behind**.
 
-## Going "Live"
+## Going Live"
 
 Most internet web servers have a *common* location for website files. It's typically located at `/home/$USER/public_html`. Where **`$USER`** is the *user* that owns the `public_html` folder. Depending on your server's particular configuration that folder may be named differently or in a different location.
 
-1) Copy the `/errpages` folder and its contents to `/home/$USER/public_html` (or its equivalent).
-2) Open the `.htaccess` file in the **repository**.
-3) **Copy** this section - 
+1) Copy the `/errpages` folder and its **contents** to `/home/$USER/public_html` (or its equivalent). You now have `/home/$USER/public_html/errpages`.
+2) Open the `.htaccess` file in the repository.
+3) **Copy** this section out of it - 
 ```
 # PHP error page, edit as needed for a "live" site
 ###ErrorDocument 400 /errpages/httperror.php
@@ -87,9 +90,15 @@ ErrorDocument 404 /errpages/httperror.php
 ErrorDocument 405 /errpages/httperror.php
 ```
 
+To see the error page working open your browser and go to - 
+`http://your_server/`**`not_here`**
+
+You should see a "400" error page.
+
 # Development Notes
 
 * Development Environment:
   * Host OS: Windows
   * Local HTTP Server: XAMPP
+    * PHP 5.6 
 
