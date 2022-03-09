@@ -5,9 +5,10 @@ This repository contains a "generic" HTTP error page. It's written in PHP/HTML a
 ## Features
 
 * A single file for all 40X HTTP errors
-* Background image(s) are random and selected from a "pool" of error images
+* Background image(s) are random and selected from a "pool" of error images when an error page is accessed
 * All files (*except* `.htaccess`) are kept in a single folder
 * Easy to copy to a website and use. You will only need to edit the `.htaccess` file
+* An option to redirect automatically to a different page
 
 # Installation
 
