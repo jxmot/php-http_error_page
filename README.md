@@ -14,7 +14,7 @@ This repository contains a "generic" HTTP error page. It's written in PHP/HTML a
 
 Two installation locations are possible. The first is a "local" location on an PC or NAS hosted HTTP server, and the second is on a "live" server.
 
-## Testing Locally
+## Local
 
 For testing on a PC this will require the installation and setup of [XAMPP](https://www.apachefriends.org/index.html) or [MAMP](https://www.mamp.info). I prefer XAMPP.
 
@@ -35,7 +35,7 @@ Some alternatives to this method are -
 
 Neither of those methods are easy to work with. But junctions are a lot easier and since they look like folders you can have as many (*within the limits of Windows*) you need. 
 
-### Example
+#### Example
 
 Let's say you're working on two separate projects and want to test them locally using XAMPP. And they're found in the following paths -
 
@@ -63,7 +63,24 @@ The following steps will create two project junctions :
 
 NOTE: The "junctions" are permanent until deleted from the `c:\xampp\htdocs` folder. You **must** use the `rmdir`(*Windows*) to remove the junction and **leave the files behind**.
 
-## Going Live"
+### Required Editing
+
+The repository `.htaccess` file *may* require some editing. This would depend on whether or not you're using the local web server and where you placed the repository files(*with or without junctions*).
+
+```
+# IMPORTANT!!! : Must remove or comment out below when 
+# deploying on a live site! Or change this to match your
+# local testing set up.
+ErrorDocument 400 /tests/httperror/errpages/httperror.php
+ErrorDocument 401 /tests/httperror/errpages/httperror.php
+ErrorDocument 403 /tests/httperror/errpages/httperror.php
+ErrorDocument 404 /tests/httperror/errpages/httperror.php
+ErrorDocument 405 /tests/httperror/errpages/httperror.php
+```
+
+This part `/tests/httperror` will need editing depending on how you set up the local server.
+
+## Live
 
 Most internet web servers have a *common* location for website files. It's typically located at `/home/$USER/public_html`. Where **`$USER`** is the *user* that owns the `public_html` folder. Depending on your server's particular configuration that folder may be named differently or in a different location.
 
