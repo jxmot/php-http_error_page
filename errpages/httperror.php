@@ -2,23 +2,18 @@
 // (is part of the name for the image pool file)
 define('PAGE_ID', 'httperror');
 
-// simulates the server's 'REDIRECT_STATUS' when true
-define('_DEBUG', false);
-
 // get ready...
 $page_redirected_from = $_SERVER['REQUEST_URI'];  // this is especially useful with error 404 to indicate the missing page.
 $server_url = 'http://' . $_SERVER['SERVER_NAME'] . '/';
 $error_code = '';
 $explanation = '';
+// post-error redirection, place a path to a resource below
+// in the `case` statments and it will be redirected to 
+// automatically after `$redirect_delay` seconds.
 $redirect_to = '';
 $redirect_delay = 10;
-
-if(_DEBUG === true) {
-    $http_status = 400;
-} else {
-    $http_status = getenv('REDIRECT_STATUS');
-}
-
+// here's the http error code...
+$http_status = getenv('REDIRECT_STATUS');
 // check the server's error code...
 switch($http_status)
 {
@@ -26,6 +21,7 @@ switch($http_status)
 	case 400:
 	$error_code = '400 - Bad Request';
 	$explanation = 'The syntax of the URL submitted by your browser could not be understood. Please verify the address and try again.';
+    // edit as needed for each `$http_status`
 	$redirect_to = '';
 	break;
 
@@ -60,7 +56,7 @@ switch($http_status)
 
     # everything else...
     default:
-    $error_code = getenv('REDIRECT_STATUS') . ' - Unknown';
+    $error_code = $http_status . ' - Unknown';
 	$explanation = 'Something bad happened, sorry!.';
 	$redirect_to = '';
     break;
