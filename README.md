@@ -15,11 +15,17 @@ Two installation locations are possible. The first is a "local" location on an P
 
 ## Testing Locally
 
-For testing on a PC this will require the installation and setup of [XAMPP](https://www.apachefriends.org/index.html) or [MAMP](https://www.mamp.info).
+For testing on a PC this will require the installation and setup of [XAMPP](https://www.apachefriends.org/index.html) or [MAMP](https://www.mamp.info). I prefer XAMPP.
+
+Sometimes using a local web server can be frustrating because of the path where the *document root* is located. It would possible mean that you would have to place your repo folder(s) in a specific location. For example - `c:\xampp\htdocs`.
+
+But that problem is easily fixed. Like Linux, Windows has the ability to create *folder junctions* (*i.e "symbolic links" in Linux*). So that means that your repositories (or other projects) can be located *anywhere* on the PC where your local web server is running. Just make a *junction* in your document root to access it via HTTP.
+
+**NOTE**: Typically there are no SSL certificates in that type of installation, which is OK because this project does not require SSL.
 
 ### Folder Junctions
 
-You might be familiar with a Linux *hard link*. The Window's equivalent is a *junction*. And they are particularly useful when keeping project folders organized in separate and possibly unrelated locations but you want to serve them with XAMPP during development. 
+You might be familiar with a Linux *hard link*. The Window's equivalent is a *junction*. And they are particularly useful when keeping project folders organized in separate and possibly unrelated locations but you want to serve them with XAMPP(*or MAMP*) during development. 
 
 Some alternatives to this method are - 
 
@@ -48,7 +54,7 @@ The following steps will create two project junctions :
 3. Then in your browser go to - 
 
     `http://localhost/projecta/index.html`
-
+**--OR--**
     `http://localhost/projectb/index.html`
 
 NOTE: The "junctions" are permanent until deleted from the `c:\mamp\htdocs` folder. You **must** use rmdir to remove the junction.
@@ -58,7 +64,7 @@ NOTE: The "junctions" are permanent until deleted from the `c:\mamp\htdocs` fold
 Most internet web servers have a *common* location for website files. It's typically located at `/home/$USER/public_html`. Where **`$USER`** is the *user* that owns the `public_html` folder. Depending on your server's particular configuration that folder may be named differently or in a different location.
 
 1) Copy the `/errpages` folder and its contents to `/home/$USER/public_html` (or its equivalent).
-2) Open the `.htaccess` file in the repository.
+2) Open the `.htaccess` file in the **repository**.
 3) **Copy** this section - 
 ```
 # PHP error page, edit as needed for a "live" site
@@ -85,3 +91,4 @@ ErrorDocument 405 /errpages/httperror.php
 * Development Environment:
   * Host OS: Windows
   * Local HTTP Server: XAMPP
+
