@@ -6,7 +6,6 @@ body{
     padding:0;
     background:#000;
     font-family:"Helvetica Neue",Helvetica, Arial !important;
-    font-size: 22px;
 }
 
 @media print {
@@ -42,6 +41,13 @@ body{
 }
 
 .httperror-content {
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+   
+    gap: 0px;
+    height: 100%;
+
+    text-align:center;
 }
 
 .httperror-banner-border {
@@ -54,10 +60,6 @@ body{
     -webkit-box-shadow: 18px 18px 20px 0px rgba(0,0,0,0.70);
     -moz-box-shadow: 18px 18px 20px 0px rgba(0,0,0,0.70);
     box-shadow: 18px 18px 20px 0px rgba(0,0,0,0.70);
-}
-
-.httperror-heading {
-    text-align:center;
 }
 
 /*
@@ -94,9 +96,6 @@ body{
         margin-top:15%;
         margin-bottom:15%;
     }
-    .httperror-heading {
-        text-align: center;
-    }
 }
 
 @media (min-width:600px) {
@@ -107,7 +106,7 @@ body{
         margin-bottom:10%;
     }
     .httperror-heading {
-        text-align: center;
+
         font-size:32px;
     }
 }
@@ -143,3 +142,36 @@ body{
     }
 }
 
+#errcode {
+    grid-row-start: 1;
+    grid-column-start: 1;
+
+    grid-row-end: 2;
+    grid-column-end: 2;
+}
+
+#explan {
+    grid-row-start: 2;
+    grid-column-start: 1;
+
+    grid-row-end: 3;
+    grid-column-end: 2;
+}
+
+#explan span {
+    color: white;
+    font-weight: bold;
+}
+
+#trythis {
+   grid-row-start: 3;
+   grid-column-start: 1;
+
+   grid-row-end: 4;
+   grid-column-end: 2;
+}
+
+#trythis a {
+    color: white;
+    font-weight: bold;
+}
