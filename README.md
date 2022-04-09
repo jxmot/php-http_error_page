@@ -24,6 +24,17 @@ But that problem is easily fixed. Like Linux, Windows has the ability to create 
 
 **NOTE**: Typically there are no SSL certificates in that type of installation, which is OK because this project does not require SSL.
 
+### Testing
+
+At the top of `httperror.php` you find this - 
+
+```php
+// uncomment for testing
+//define('_DEBUG', true);
+```
+
+Uncomment the `//define('_DEBUG', true);` line and "debug" will be active. You can then load the page from the server and a `404` error will be simulated.
+
 ### Folder Junctions
 
 You might be familiar with a Linux *hard link*. The Window's equivalent is a *junction*. And they are particularly useful when keeping project folders organized in separate and possibly unrelated locations but you want to serve them with XAMPP(*or MAMP*) during development. 
