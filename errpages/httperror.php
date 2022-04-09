@@ -2,9 +2,16 @@
 // (is part of the name for the image pool file)
 define('PAGE_ID', 'httperror');
 
+define('_DEBUG', true);
+
 // get ready...
-$page_redirected_from = $_SERVER['REQUEST_URI'];  // this is especially useful with error 404 to indicate the missing page.
-$server_url = 'http://' . $_SERVER['SERVER_NAME'] . '/';
+if(defined('_DEBUG') && _DEBUG === true) {
+    $page_redirected_from = '/nowhere.html';
+    $server_url = 'http://noplace.com/';
+} else {
+    $page_redirected_from = $_SERVER['REQUEST_URI'];  // this is especially useful with error 404 to indicate the missing page.
+    $server_url = 'http://' . $_SERVER['SERVER_NAME'] . '/';
+}
 $error_code = '';
 $explanation = '';
 // post-error redirection, place a path to a resource below
@@ -12,8 +19,13 @@ $explanation = '';
 // automatically after `$redirect_delay` seconds.
 $redirect_to = '';
 $redirect_delay = 10;
-// here's the http error code...
-$http_status = getenv('REDIRECT_STATUS');
+
+if(defined('_DEBUG') && _DEBUG === true) {
+    $http_status = 404;
+} else {
+    // here's the http error code...
+    $http_status = getenv('REDIRECT_STATUS');
+}
 // check the server's error code...
 switch($http_status)
 {
