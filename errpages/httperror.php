@@ -1,8 +1,9 @@
 <?php
+// uncomment for testing
+//define('_DEBUG', true);
+
 // (is part of the name for the image pool file)
 define('PAGE_ID', 'httperror');
-
-define('_DEBUG', true);
 
 // get ready...
 if(defined('_DEBUG') && _DEBUG === true) {
