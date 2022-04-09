@@ -62,10 +62,6 @@ body{
     box-shadow: 18px 18px 20px 0px rgba(0,0,0,0.70);
 }
 
-.httperror-heading {
-
-}
-
 /*
     Media breaks
 */
@@ -99,9 +95,6 @@ body{
     .httperror-banner {
         margin-top:15%;
         margin-bottom:15%;
-    }
-    .httperror-heading {
-
     }
 }
 
