@@ -128,7 +128,10 @@ require_once $imagepool;
 $randquery = '?' . (microtime(true) * 10000);
 ?>
 <!DOCTYPE html>
+<html lang="en-us">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8"/>
     <meta name="robots" content="noindex,nofollow">	
     <meta name="author" content="Jim Motyl - github.com/jxmot"/>
     <link href="/favicon.ico" rel="icon" type="image/ico" />
