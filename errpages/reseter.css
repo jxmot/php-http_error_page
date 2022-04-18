@@ -6,8 +6,6 @@
 
     Modified By: 
         https://github.com/jxmot
-
-    Repository: https://github.com/jxmot/website_template-no_bootstrap
 */
 *,
 *::before,
@@ -131,6 +129,9 @@ select {
 textarea {
     overflow: auto;
     vertical-align: top;
+    /* jxmot
+    by default a text area will use a monospace font */
+    font-family: inherit;
 }
 
 [type="search"] {
@@ -227,6 +228,10 @@ details {
     display: block;
 }
 
+summary {
+    display: list-item;
+}
+
 dialog {
     background-color: inherit;
     border: solid;
@@ -247,10 +252,6 @@ dialog {
 
 dialog:not([open]) {
     display: none;
-}
-
-summary {
-    display: list-item;
 }
 
 canvas {
