@@ -5,10 +5,25 @@ This repository contains a "generic" HTTP error page. It's written in PHP/HTML a
 ## Features
 
 * A single file for all 40X HTTP errors
-* Background image(s) are random and selected from a "pool" of error images when an error page is accessed
+* Two options for the page background -  
+  * A background image, randomly selected from a "pool" of images.
+  * A moving gradient of four random colors.
 * All files (*except* `.htaccess`) are kept in a single folder
 * Easy to copy to a website and use. You will only need to edit the `.htaccess` file
 * An option to redirect automatically to a different page
+
+Optional Page Backgrounds: 
+
+<div align="center">
+    <figure>
+<!-- NOTE: When Github renders the images it will REMOVE the "margin", and ADD "max-width:100%" -->
+        <img src="./mdimg/sshot-bgimg.jpg" style="width:25%;border: 2px solid black;margin-right: 1rem;"; alt="Screen Shot of Error Page with an image background"/>
+        <img src="./mdimg/sshot-bggrad.jpg" style="width:25%;border: 2px solid black;margin-right: 1rem;"; alt="Error Page with a moving gradient background"/>
+        <br>
+        <figcaption><strong>Random Image and Random Color Gradient Background</strong></figcaption>
+    </figure>
+</div>
+<br>
 
 # Installation
 
@@ -30,10 +45,10 @@ At the top of `httperror.php` you find this -
 
 ```php
 // uncomment for testing
-//define('_DEBUG', true);
+define('_DEBUG', false);
 ```
 
-Uncomment the `//define('_DEBUG', true);` line and "debug" will be active. You can then load the page from the server and a `404` error will be simulated.
+Change `false` to `true` and "debug" will be active. You can then load the page from the server and a `404` error will be simulated.
 
 ### Folder Junctions
 
@@ -122,6 +137,18 @@ To see the error page working open your browser and go to -
 `http://your_server/`**`not_here`**
 
 You should see a "400" error page.
+
+## Changing Backgrounds
+
+Near the top of the `httperror.php` file:
+
+```
+// can't have both!!
+define('_IMG_POOL', false);
+define('_GRADIENT', true);
+```
+
+Set `_IMG_POOL` or `_GRADIENT` to `true` to select that background type.
 
 # Development Notes
 
