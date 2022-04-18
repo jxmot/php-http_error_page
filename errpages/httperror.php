@@ -1,6 +1,10 @@
 <?php
-// uncomment for testing
-//define('_DEBUG', true);
+// set to true for testing
+define('_DEBUG', false);
+
+// can't have both!!
+define('_IMG_POOL', false);
+define('_GRADIENT', true);
 
 // (is part of the name for the image pool file)
 define('PAGE_ID', 'httperror');
@@ -113,15 +117,17 @@ function isLive() {
 }
 
 if(isLive() === true) {
-    define('_BASE_PATH', '');
+    define('_BASE_PATH', '.');
 } else {
     // edit as needed, this will be used if the 
     // page is being served locally.
     define('_BASE_PATH', '/tests/httperror');
 }
 
-$imagepool = './' . PAGE_ID . '_imagepool.php';
-require_once $imagepool;
+if(defined('_IMG_POOL') && _IMG_POOL === true) {
+    $imagepool = './' . PAGE_ID . '_imagepool.php';
+    require_once $imagepool;
+}
 
 // this will help defeat forced caching, like some android
 // browsers. they even ignore the anti-caching meta tags.
@@ -135,29 +141,66 @@ $randquery = '?' . (microtime(true) * 10000);
     <meta name="robots" content="noindex,nofollow">	
     <meta name="author" content="Jim Motyl - github.com/jxmot"/>
     <link href="/favicon.ico" rel="icon" type="image/ico" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 <?php
-    // this will auto-redirect if redirect_to contains a URL
-	if(($redirect_to !== '') && (!defined('_DEBUG') || _DEBUG === false)) {
-        echo '<meta http-equiv="Refresh" content="' . $redirect_delay . '; url=' . $redirect_to . '">';
-	}
+// this will auto-redirect if redirect_to contains a URL
+if(($redirect_to !== '') && (!defined('_DEBUG') || _DEBUG === false)) {
+    echo '    <meta http-equiv="Refresh" content="' . $redirect_delay . '; url=' . $redirect_to . '">';
+}
+
+function randColor() {
+    return '#' . str_pad(dechex(rand(0, 16777215)+rand(0, 255)), 6, '0', STR_PAD_LEFT);
+}
+
+$rcolors = '';
+if(defined('_GRADIENT') && _GRADIENT === true) {
+    $rcolors = randColor() . ',' . randColor() . ',' . randColor() . ',' . randColor();
+}
+
+$animenab = '';
+
+if(defined('_GRADIENT') && _GRADIENT === true) {
+    $animenab = "            animation: bg-gradient 10s ease infinite;\n";
+} else {
+    $animenab = "            /* _GRADIENT is off */\n";
+}
 ?>
 	<title>OOPS! : <?php echo $error_code;?></title>
 
     <link rel="stylesheet" href="<?php echo _BASE_PATH;?>/errpages/reseter.css<?php echo $randquery; ?>"/>
     <link rel="stylesheet" href="<?php echo _BASE_PATH;?>/errpages/httperror.css<?php echo $randquery; ?>"/>
-    <!-- this styling must be here to utilize PHP for the random background image -->
+    <!-- this styling must be here to utilize PHP for the random background image and 
+         for the moving background gradient with random colors -->
     <style type="text/css">
         .site-bg-image {
-            background:url(<?php echo $selectedBg; ?>) no-repeat center center fixed;
-            z-index: -1;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size:cover;
+            background:url(<?php echo (!isset($selectedBg) ? '' : $selectedBg); ?>) no-repeat center center fixed;
+        }
+
+        .site-bg-gradient {
+            background: linear-gradient(-45deg, <?php echo $rcolors; ?>);
+            /* makes it visible */
+            background-size: 400% 400%;
+<?php
+if(defined('_GRADIENT') && _GRADIENT === true) {
+    echo "            animation: bg-gradient 10s ease infinite;\n";
+} else {
+    echo "            /* _GRADIENT is off */\n";
+}
+?>
         }
     </style>
 </head>
-<body class="site-bg-image">
+<?php
+if(defined('_IMG_POOL') && _IMG_POOL === true) {
+    echo '<body class="site-bg-image">' . "\n";
+}
+
+if(defined('_GRADIENT') && _GRADIENT === true) {
+    echo '<body class="site-bg-gradient">' . "\n";
+}
+?>
     <div class="httperror-banner httperror-banner-border httperror-banner-shadow">
         <div class="httperror-content">
             <h1 id="errcode" class="over-dark-bg httperror-heading">Error Code: <?php print ($error_code); ?></h1>
@@ -167,11 +210,12 @@ $randquery = '?' . (microtime(true) * 10000);
                 <a href="<?php print ($server_url); ?>"><?php print ($server_url); ?></a>
             </p>
 <?php
-    // this will auto-redirect if $redirect_to contains a URL
-	if($redirect_to != '') {
-        echo '            ';
-        echo '<p class="over-dark-bg">Redirecting in ' . $redirect_delay . ' seconds to ' . $redirect_to . '</p>';
-	}
+// this will auto-redirect if $redirect_to contains a URL
+if($redirect_to != '') {
+    echo '            ';
+    $dbg = (defined('_DEBUG') && _DEBUG === true ? '<strong>DEBUG</strong>' : '');
+    echo '<p class="over-dark-bg">' . $dbg . ' Redirecting in ' . $redirect_delay . ' seconds to ' . $redirect_to . '</p>';
+}
 ?>
         </div>
     </div>

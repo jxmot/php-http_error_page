@@ -18,6 +18,29 @@ body{
     color:yellow !important;
 }
 
+.site-bg-image {
+    z-index: -1;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size:cover;
+}
+
+/*
+    Moving Gradient Background
+*/
+@keyframes bg-gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
 /*
     Box styling
 */
@@ -26,7 +49,6 @@ body{
     margin-left: 10%;
     margin-bottom:10%;
 
-    /* border: 3px solid yellow; */
     background-color: rgba(79, 79, 79, 0.79);
 	-webkit-backdrop-filter: blur(3px);
 	backdrop-filter: blur(3px);
@@ -106,7 +128,6 @@ body{
         margin-bottom:10%;
     }
     .httperror-heading {
-
         font-size:32px;
     }
 }
