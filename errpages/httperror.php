@@ -117,7 +117,7 @@ function isLive() {
 }
 
 if(isLive() === true) {
-    define('_BASE_PATH', '.');
+    define('_BASE_PATH', '');
 } else {
     // edit as needed, this will be used if the 
     // page is being served locally.
