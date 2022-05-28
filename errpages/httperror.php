@@ -1,5 +1,6 @@
 <?php
-// set to true for testing
+// set to true for testing with canned data, otherwise
+// testing can be done with ../testhttperror.php
 define('_DEBUG', false);
 
 // can't have both!!
@@ -34,7 +35,7 @@ $redirect_delay = 10;
 if(defined('_DEBUG') && _DEBUG === true) {
     $http_status = 404;
     $page_redirected_from = '/nowhere.html';
-    $server_url = 'http://noplace.com/';
+    $server_url = (isHTTPS() ? 'https://' : 'http://') . 'noplace.com/';
 } else {
     // here's the http error code...
     $http_status = getenv('REDIRECT_STATUS');
@@ -161,6 +162,10 @@ $randquery = '?' . (microtime(true) * 10000);
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+
+    <meta name="server_https" content="<?php echo (!empty($_SERVER['HTTPS']) ? $_SERVER['HTTPS'] : 'http'); ?>"/>
+    <meta name="server_port" content="<?php echo $_SERVER['SERVER_PORT']; ?>"/>
+
 <?php
 // this will auto-redirect if redirect_to contains a URL
 if(($redirect_to !== '') && (!defined('_DEBUG') || _DEBUG === false)) {
