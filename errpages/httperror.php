@@ -121,13 +121,17 @@ function cidrmatch($ip, $cidr)
 function isLive() {
     $ret = ((SRVNAME !== 'localhost') && 
             (SRVNAME !== '127.0.0.1') && 
+            // edit as needed
             (SRVNAME !== 'xampp') && 
+            // edit the next 2 CIDRs to match your local network
             (cidrmatch(SRVNAME, '192.168.0.0/24') === false) &&
             (cidrmatch(REMADDR, '192.168.0.0/24') === false));
 
     return $ret;
 }
 
+// the "development & test" environment is different 
+// from a "live" server
 if(isLive() === true) {
     define('_BASE_PATH', '');
 } else {
@@ -136,6 +140,7 @@ if(isLive() === true) {
     define('_BASE_PATH', '/tests/httperror');
 }
 
+// are we using background images?
 if(defined('_IMG_POOL') && _IMG_POOL === true) {
     $imagepool = './' . PAGE_ID . '_imagepool.php';
     require_once $imagepool;
