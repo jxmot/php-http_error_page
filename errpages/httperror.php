@@ -6,17 +6,22 @@ define('_DEBUG', false);
 define('_IMG_POOL', false);
 define('_GRADIENT', true);
 
+// safety check...
+if((defined('_IMG_POOL') && defined('_GRADIENT')) && 
+   (_IMG_POOL === _GRADIENT)) {
+    echo "<h1>Check _IMG_POOL and _GRADIENT!</h1>\n";
+    die();
+}
+
 // (is part of the name for the image pool file)
 define('PAGE_ID', 'httperror');
 
-// get ready...
-if(defined('_DEBUG') && _DEBUG === true) {
-    $page_redirected_from = '/nowhere.html';
-    $server_url = 'http://noplace.com/';
-} else {
-    $page_redirected_from = $_SERVER['REQUEST_URI'];  // this is especially useful with error 404 to indicate the missing page.
-    $server_url = 'http://' . $_SERVER['SERVER_NAME'] . '/';
+// was the request over HTTPS or HTTP?
+function isHTTPS() {
+  return ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443);
 }
+
+$http_status = 0;
 $error_code = '';
 $explanation = '';
 // post-error redirection, place a path to a resource below
@@ -25,12 +30,19 @@ $explanation = '';
 $redirect_to = '';
 $redirect_delay = 10;
 
+// get ready...
 if(defined('_DEBUG') && _DEBUG === true) {
     $http_status = 404;
+    $page_redirected_from = '/nowhere.html';
+    $server_url = 'http://noplace.com/';
 } else {
     // here's the http error code...
     $http_status = getenv('REDIRECT_STATUS');
+    // this is especially useful with error 404 to indicate the missing page.
+    $page_redirected_from = $_SERVER['REQUEST_URI']; 
+    $server_url = (isHTTPS() ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'] . '/';
 }
+
 // check the server's error code...
 switch($http_status) {
 	# '400 - Bad Request'
@@ -155,16 +167,18 @@ function randColor() {
 }
 
 $rcolors = '';
+$animenab = '';
+$bodytag = "<body>\n";
+
 if(defined('_GRADIENT') && _GRADIENT === true) {
     $rcolors = randColor() . ',' . randColor() . ',' . randColor() . ',' . randColor();
-}
-
-$animenab = '';
-
-if(defined('_GRADIENT') && _GRADIENT === true) {
     $animenab = "            animation: bg-gradient 10s ease infinite;\n";
+    $bodytag = '<body class="site-bg-gradient">' . "\n";
 } else {
     $animenab = "            /* _GRADIENT is off */\n";
+    if(defined('_IMG_POOL') && _IMG_POOL === true) {
+        $bodytag = '<body class="site-bg-image">' . "\n";
+    }
 }
 ?>
 	<title>OOPS! : <?php echo $error_code;?></title>
@@ -183,23 +197,13 @@ if(defined('_GRADIENT') && _GRADIENT === true) {
             /* makes it visible */
             background-size: 400% 400%;
 <?php
-if(defined('_GRADIENT') && _GRADIENT === true) {
-    echo "            animation: bg-gradient 10s ease infinite;\n";
-} else {
-    echo "            /* _GRADIENT is off */\n";
-}
+echo $animenab;
 ?>
         }
     </style>
 </head>
 <?php
-if(defined('_IMG_POOL') && _IMG_POOL === true) {
-    echo '<body class="site-bg-image">' . "\n";
-}
-
-if(defined('_GRADIENT') && _GRADIENT === true) {
-    echo '<body class="site-bg-gradient">' . "\n";
-}
+echo $bodytag;
 ?>
     <div class="httperror-banner httperror-banner-border httperror-banner-shadow">
         <div class="httperror-content">
