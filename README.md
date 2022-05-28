@@ -41,7 +41,7 @@ But that problem is easily fixed. Like Linux, Windows has the ability to create 
 
 ### Testing
 
-At the top of `httperror.php` you find this - 
+At the top of `/errpages/httperror.php` you find this - 
 
 ```php
 // uncomment for testing
@@ -49,6 +49,27 @@ define('_DEBUG', false);
 ```
 
 Change `false` to `true` and "debug" will be active. You can then load the page from the server and a `404` error will be simulated.
+
+#### Additional Testing
+
+The `/testhttperror.php` file can be used for testing error codes. First set `_DEBUG` to `false` in `/errpages/httperror.php`, and then open `/testhttperror.php` in your edtior - 
+
+```php
+<?php
+// this script is for testing ./errpages/httperror.php, just 
+// change the code below
+$testcode = 401;
+// this just proves we can overwrite $_SERVER
+$_SERVER['HTTPS'] = 'on';
+$_SERVER['SERVER_PORT'] = 443;
+// get the code to httperror.php...
+putenv("REDIRECT_STATUS={$testcode}");
+// test!
+require_once './errpages/httperror.php';
+?>
+```
+
+Just change `$testcode` to the error code you want to test. Then point your browser to `testhttperror.php`.
 
 ### Folder Junctions
 
@@ -106,7 +127,7 @@ ErrorDocument 405 /tests/httperror/errpages/httperror.php
 
 This part `/tests/httperror` will need editing depending on how you set up the local server.
 
-## Live
+## It Lives!
 
 Most internet web servers have a *common* location for website files. It's typically located at `/home/$USER/public_html`. Where **`$USER`** is the *user* that owns the `public_html` folder. Depending on your server's particular configuration that folder may be named differently or in a different location.
 
