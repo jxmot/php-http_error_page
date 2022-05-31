@@ -5,7 +5,8 @@ This repository contains a "generic" HTTP error page. It's written in PHP/HTML a
 ## Features
 
 * A single file for all 40X HTTP errors
-* Two options for the page background -  
+  * A JSON file contains the error codes and messages
+* Two options for the page background:  
   * A background image, randomly selected from a "pool" of images.
   * A moving gradient of four random colors.
 * All files (*except* `.htaccess`) are kept in a single folder
@@ -126,6 +127,22 @@ ErrorDocument 405 /tests/httperror/errpages/httperror.php
 ```
 
 This part `/tests/httperror` will need editing depending on how you set up the local server.
+
+### Optional Editing
+
+The file `/errpages/httperror.json` contains the *known* HTTP error status codes and associated messages:
+
+```json
+{
+     "400": ["", "400 - Bad Request","The syntax of the URL submitted by your browser could not be understood. Please verify the address and try again."]
+    ,"401": ["", "401 - Unauthorized", "This section requires a password or is otherwise protected. If you feel you have reached this page in error, please return to the login page and try again, or contact the webmaster if you continue to have problems."]
+    ,"403": ["", "403 - Forbidden", "This section requires a password or is otherwise protected. If you feel you have reached this page in error, please return to the login page and try again, or contact the webmaster if you continue to have problems."]
+    ,"404": ["", "404 - Not Found", "The requested resource could not be found on this server. Please verify the address and try again."]
+    ,"405": ["", "405 - Method Not Allowed", "The request method is known by the server but has been disabled and cannot be used."]
+}
+```
+
+Edit as necessary. Status codes can be added, removed, or edited.
 
 ## It Lives!
 
