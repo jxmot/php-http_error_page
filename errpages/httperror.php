@@ -100,7 +100,7 @@ define('REDIRECT', 0);
 define('ERROR_CODE', 1);
 define('EXPLANATION', 2);
 
-$errorcodes  = json_decode(file_get_contents('./errpages/httperror.json'), true);
+$errorcodes  = json_decode(file_get_contents(getenv('ERRPAGE_JSON_PATH') . 'httperror.json'), true);
 
 if(@$errorcodes["{$http_status}"]) {
     $error_code  = $errorcodes["{$http_status}"][ERROR_CODE];
