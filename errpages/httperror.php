@@ -23,13 +23,6 @@ function isHTTPS() {
 }
 
 $http_status = 0;
-$error_code = '';
-$explanation = '';
-// post-error redirection, place a path to a resource below
-// in the `case` statments and it will be redirected to 
-// automatically after `$redirect_delay` seconds.
-$redirect_to = '';
-$redirect_delay = 10;
 
 // get ready...
 if(defined('_DEBUG') && _DEBUG === true) {
@@ -43,60 +36,6 @@ if(defined('_DEBUG') && _DEBUG === true) {
     $page_redirected_from = $_SERVER['REQUEST_URI']; 
     $server_url = (isHTTPS() ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'] . '/';
 }
-
-// check the server's error code...
-switch($http_status) {
-	# '400 - Bad Request'
-	case 400:
-	$error_code = '400 - Bad Request';
-	$explanation = 'The syntax of the URL submitted by your browser could not be understood. Please verify the address and try again.';
-    // edit as needed for each `$http_status`
-	$redirect_to = '';
-	break;
-
-	# '401 - Unauthorized'
-	case 401:
-	$error_code = '401 - Unauthorized';
-	$explanation = 'This section requires a password or is otherwise protected. If you feel you have reached this page in error, please return to the login page and try again, or contact the webmaster if you continue to have problems.';
-	$redirect_to = '';
-	break;
-
-	# '403 - Forbidden'
-    # might be handled by the server instead of here
-	case 403:
-	$error_code = '403 - Forbidden';
-	$explanation = 'This section requires a password or is otherwise protected. If you feel you have reached this page in error, please return to the login page and try again, or contact the webmaster if you continue to have problems.';
-	$redirect_to = '';
-	break;
-
-	# '404 - Not Found'
-	case 404:
-	$error_code = '404 - Not Found';
-	$explanation = 'The requested resource: <span>' . $page_redirected_from . '</span>, could not be found on this server. Please verify the address and try again.';
-    if(defined('_DEBUG') && _DEBUG === true) {
-        $redirect_to = 'https://google.com';
-    } else {
-        $redirect_to = '';
-    }
-	break;
-
-	# '405 - Method Not Allowed'
-	case 405:
-	$error_code = '405 - Method Not Allowed';
-	$explanation = 'The request method is known by the server but has been disabled and cannot be used.';
-	$redirect_to = '';
-	break;
-
-    # everything else...
-    default:
-    $error_code = $http_status . ' - Unknown';
-	$explanation = 'Something bad happened, sorry!.';
-	$redirect_to = '';
-    break;
-}
-
-define('SRVNAME',   ((isset($_SERVER['SERVER_NAME']) === true) ? $_SERVER['SERVER_NAME']  : 'none'));
-define('REMADDR',   ((isset($_SERVER['REMOTE_ADDR']) === true) ? $_SERVER['REMOTE_ADDR']  : 'none'));
 
 /*
     cidrmatch() - returns `true` only if the IP 
@@ -119,6 +58,9 @@ function cidrmatch($ip, $cidr)
     isLive() - returns `true` if this script is 
     running on a "live" server
 */
+define('SRVNAME',   ((isset($_SERVER['SERVER_NAME']) === true) ? $_SERVER['SERVER_NAME']  : 'none'));
+define('REMADDR',   ((isset($_SERVER['REMOTE_ADDR']) === true) ? $_SERVER['REMOTE_ADDR']  : 'none'));
+
 function isLive() {
     $ret = ((SRVNAME !== 'localhost') && 
             (SRVNAME !== '127.0.0.1') && 
@@ -145,6 +87,29 @@ if(isLive() === true) {
 if(defined('_IMG_POOL') && _IMG_POOL === true) {
     $imagepool = './' . PAGE_ID . '_imagepool.php';
     require_once $imagepool;
+}
+
+$error_code = '';
+$explanation = '';
+// post-error redirection, it will be redirected 
+// automatically after `$redirect_delay` seconds.
+$redirect_to = '';
+$redirect_delay = 10;
+
+define('REDIRECT', 0);
+define('ERROR_CODE', 1);
+define('EXPLANATION', 2);
+
+$errorcodes  = json_decode(file_get_contents('./errpages/httperror.json'), true);
+
+if(@$errorcodes["{$http_status}"]) {
+    $error_code  = $errorcodes["{$http_status}"][ERROR_CODE];
+    $explanation = $errorcodes["{$http_status}"][EXPLANATION];
+    $redirect_to = $errorcodes["{$http_status}"][REDIRECT];
+} else {
+    $error_code  = $http_status . ' - Unknown';
+	$explanation = 'Something bad happened, sorry!.';
+	$redirect_to = '';
 }
 
 // this will help defeat forced caching, like some android
